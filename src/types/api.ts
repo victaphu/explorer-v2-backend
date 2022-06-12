@@ -1,5 +1,5 @@
 import * as blockchain from './blockchain'
-export type FilterType = 'gt' | 'gte' | 'lt' | 'lte' | 'eq' | 'startsFrom'
+export type FilterType = 'gt' | 'gte' | 'lt' | 'lte' | 'eq' | 'startsFrom' | 'nn'
 export type FilterProperty =
   | 'number'
   | 'block_number'
@@ -10,6 +10,12 @@ export type FilterProperty =
   | 'token_address'
   | 'transaction_type'
   | 'timestamp'
+  | 'api_address' // block api - address properties
+  | 'miner' // block api - address filters
+  | 'sha3_uncles' // block api - uncles filter
+  | 'event_type' // block api - event types
+  | 'transaction_type' // block api - transaction types
+  | 'transaction_index' // block api - transaction index
 
 export type TransactionQueryField = 'block_number' | 'block_hash' | 'hash' | 'hash_harmony'
 export type StakingTransactionQueryField = 'block_number' | 'block_hash' | 'hash'
@@ -40,7 +46,7 @@ export type FilterEntry = {
   value: number | string
 }
 
-export type FilterOrderBy = 'number' | 'block_number'
+export type FilterOrderBy = 'number' | 'block_number' | 'miner' // miner for block explorer api
 
 export type FilterOrderDirection = 'asc' | 'desc'
 export type Filter = {

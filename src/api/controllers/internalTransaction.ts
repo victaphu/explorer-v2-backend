@@ -45,3 +45,33 @@ export async function getInternalTransactionsByField(
     1000 * 10
   )
 }
+
+export async function getInternalTransactions(shardID: ShardID, filter?: Filter) {
+  validator({
+    shardID: isShard(shardID),
+  })
+
+  if (filter) {
+    validator({
+      offset: isOffset(filter.offset),
+      limit: isLimit(filter.limit),
+      orderBy: isOrderBy(filter.orderBy, ['block_number']),
+      orderDirection: isOrderDirection(filter.orderDirection),
+      filter: isFilters(filter.filters, ['block_number', 'api_address']),
+    })
+  } else {
+    filter = {
+      offset: 0,
+      limit: 10,
+      orderBy: 'block_number',
+      orderDirection: 'desc',
+      filters: [],
+    }
+  }
+
+  return await withCache(
+    ['getInternalTransactionsByField', arguments],
+    () => stores[shardID].internalTransaction.getInternalTransactions(filter!),
+    1000 * 10
+  )
+}

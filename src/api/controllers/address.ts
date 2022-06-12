@@ -4,16 +4,13 @@ import {
   Address,
   ContractQueryField,
   ContractQueryValue,
-  TransactionQueryValue,
   AddressTransactionType,
   InternalTransaction,
   FilterEntry,
 } from 'src/types'
 import {validator} from 'src/utils/validators/validators'
 import {
-  is64CharHexHash,
   isAddress,
-  isBlockNumber,
   isFilters,
   isLimit,
   isOffset,

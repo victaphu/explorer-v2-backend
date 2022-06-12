@@ -8,6 +8,7 @@ const mapFilterTypeToSQL: Record<FilterType, string> = {
   lte: '<=',
   eq: '=',
   startsFrom: 'startsFrom',
+  nn: 'is not null',
 }
 
 const propertyToString = (property: string) => {
@@ -27,6 +28,22 @@ export const buildSQLQuery = (query: Filter) => {
     .map((f) => {
       if (f.type === 'startsFrom') {
         return `${propertyToString(f.property)} like '${safeSQL(f.value)}%'`
+      }
+
+      if (f.property === 'api_address') {
+        return `("from" ${mapFilterTypeToSQL[f.type]} '${safeSQL(f.value)}' or "to" ${
+          mapFilterTypeToSQL[f.type]
+        } '${safeSQL(f.value)}')`
+      }
+
+      if (f.property === 'miner') {
+        return `(${propertyToString(f.property)} ${mapFilterTypeToSQL[f.type]} '${safeSQL(
+          f.value
+        )}')`
+      }
+
+      if (f.type === 'nn') {
+        return `${propertyToString(f.property)} ${mapFilterTypeToSQL[f.type]}`
       }
 
       return `${propertyToString(f.property)} ${mapFilterTypeToSQL[f.type]} ${safeSQL(f.value)}`

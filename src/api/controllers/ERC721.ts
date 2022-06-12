@@ -3,6 +3,7 @@ import {InternalTransaction, ShardID, IERC20, IERC20Balance, Address} from 'src/
 import {withCache} from 'src/api/controllers/cache'
 import {validator} from 'src/utils/validators/validators'
 import {isAddress, isShard} from 'src/utils/validators'
+import {Filter} from 'src/types'
 
 export async function getAllERC721(): Promise<IERC20[] | null> {
   return await withCache(
@@ -32,6 +33,14 @@ export async function getTokenERC721Assets(address: Address): Promise<IERC20Bala
   return await withCache(
     ['getTokenERC721Assets', arguments],
     () => stores[0].erc721.getTokenAssets(address),
+    1000 * 60 * 5
+  )
+}
+
+export async function getERC721Events(filter: Filter) {
+  return await withCache(
+    ['getERC721Events', arguments],
+    () => stores[0].erc721.getEvents(filter),
     1000 * 60 * 5
   )
 }

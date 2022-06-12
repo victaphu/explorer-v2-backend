@@ -13,6 +13,7 @@ import {
   InternalTransaction,
   ByteCode,
   TransactionReceipt,
+  BalanceTag,
 } from 'types/blockchain'
 import {mapBlockFromResponse, mapInternalTransactionFromBlockTrace} from './mappers'
 import {mainnetChainID} from 'src/constants'
@@ -71,11 +72,15 @@ export const getLogs = (
   return transport(shardID, 'eth_getLogs', [o])
 }
 
-export const getBalance = (shardID: ShardID, address: Address): Promise<string> => {
-  return transport(shardID, 'hmy_getBalance', [address, 'latest'])
+export const getBalance = (
+  shardID: ShardID,
+  address: Address,
+  tag: BalanceTag = 'latest'
+): Promise<string> => {
+  return transport(shardID, 'hmy_getBalance', [address, tag])
 }
 
-type transactionCountType = 'ALL' | 'RECEIVED' | 'SENT'
+export type transactionCountType = 'ALL' | 'RECEIVED' | 'SENT'
 export const getTransactionCount = (
   shardID: ShardID,
   address: Address,
@@ -125,11 +130,52 @@ export const getChainID = (shardID: ShardID): Promise<number> => {
   return transport(shardID, 'eth_chainId', []).then((r) => parseInt(r, 16))
 }
 
-export const getCode = (shardID: ShardID, address: Address): Promise<number> => {
-  return transport(shardID, 'eth_getCode', [address, 'latest'])
+export const getCode = (
+  shardID: ShardID,
+  address: Address,
+  tag: string = 'latest'
+): Promise<number> => {
+  return transport(shardID, 'eth_getCode', [address, tag])
 }
 
-type Call = {
+export const getBlockNumber = (shardID: ShardID): Promise<number> => {
+  return transport(shardID, 'eth_blockNumber', [])
+}
+
+export const sendRawTransactions = (shardID: ShardID, hex: string) => {
+  return transport(shardID, 'eth_sendRawTransactions', [hex])
+}
+
+export const getStorageAt = (
+  shardID: ShardID,
+  address: Address,
+  position: string,
+  tag: string = 'latest'
+) => {
+  return transport(shardID, 'eth_getStorageAt', [address, position, tag])
+}
+
+export const getPrice = (shardID: ShardID) => {
+  return transport(shardID, 'eth_gasPrice', [])
+}
+
+export const getTotalSupply = (shardID: ShardID) => {
+  return transport(shardID, 'hmy_getTotalSupply', [])
+}
+
+export const getNodeCount = (shardID: ShardID) => {
+  return transport(shardID, 'net_peerCount', [])
+}
+
+export const estimateGas = (
+  shardID: ShardID,
+  params: Call,
+  blockNumber: BlockNumber | 'latest' | 'earliest' | 'pending' = 'latest'
+) => {
+  return transport(shardID, 'eth_estimateGas', [params, blockNumber])
+}
+
+export type Call = {
   to: Address
   from?: Address
   gas?: string

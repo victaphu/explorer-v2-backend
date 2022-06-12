@@ -41,6 +41,26 @@ export async function getBlockByHash(shardID: ShardID, blockHash: string) {
   )
 }
 
+export async function getMinedBlocks(shardID: ShardID, filter: Filter) {
+  validator({
+    shardID: isShard(shardID),
+  })
+
+  validator({
+    offset: isOffset(filter.offset),
+    limit: isLimit(filter.limit),
+    orderBy: isOrderBy(filter.orderBy, ['number']),
+    orderDirection: isOrderDirection(filter.orderDirection),
+    filter: isFilters(filter.filters, ['miner', 'sha3_uncles']),
+  })
+
+  return await withCache(
+    ['getBlocks', arguments],
+    () => stores[shardID].block.getBlocks(filter!),
+    2000
+  )
+}
+
 export async function getBlocks(shardID: ShardID, filter?: Filter) {
   validator({
     shardID: isShard(shardID),

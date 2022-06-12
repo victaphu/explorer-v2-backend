@@ -85,3 +85,15 @@ export async function getTransactions(shardID: ShardID, filter?: Filter) {
     2000
   )
 }
+
+export async function getTransactionByFilters(shardID: ShardID, filter?: Filter) {
+  validator({
+    shardID: isShard(shardID),
+  })
+
+  return await withCache(
+    ['getTransactions', arguments],
+    () => stores[shardID].transaction.getTransactions(filter!),
+    2000
+  )
+}

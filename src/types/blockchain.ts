@@ -6,6 +6,12 @@ export type RPCETHMethod =
   | 'trace_block'
   | 'eth_chainId'
   | 'eth_getCode'
+  | 'eth_getBalance'
+  | 'eth_blockNumber'
+  | 'eth_sendRawTransactions'
+  | 'eth_getStorageAt'
+  | 'eth_gasPrice'
+  | 'eth_estimateGas'
 
 export type RPCHarmonyMethod =
   | 'hmy_getBlockByNumber'
@@ -16,6 +22,8 @@ export type RPCHarmonyMethod =
   | 'hmyv2_getTransactionReceipt'
   | 'hmy_getBalance'
   | 'hmyv2_getTransactionsCount'
+  | 'hmy_getTotalSupply'
+  | 'net_peerCount'
 
 export type ShardID = 0 | 1 | 2 | 3
 
@@ -90,6 +98,7 @@ export type Block = Modify<
 
 export type Address = string
 export type AddressHarmony = string
+export type BalanceTag = string | number
 
 export type TransactionHash = string
 export type TransactionHarmonyHash = string
@@ -110,6 +119,7 @@ export type RPCTransaction = {
   transactionIndex: string
   v: string
   value: string
+  error?: TraceCallErrorToRevert
 }
 
 export type TransactionReceipt = RPCTransaction & {
@@ -298,6 +308,27 @@ export type Contract = {
   bytecode: string
 }
 
+export type IERC20Events = {
+  blockNumber: BlockNumber
+  timestamp: string
+  hash: BytecodeSignatureHash
+  nonce: string
+  blockHash: BlockHash
+  from: Address
+  contractaddress: Address
+  to: Address
+  value: string
+  tokenName: string
+  tokenSymbol: string
+  tokenDecimal: number
+  transactionIndex: string
+  gas: string
+  gasPrice: string
+  gasUsed: string
+  cumulativeGasUsed: string
+  input: ByteCode
+}
+
 export type IERC20 = {
   address: Address
   decimals: number
@@ -337,6 +368,27 @@ export type IERC721Asset = {
   lastUpdateBlockNumber?: number
 }
 
+export type IERC721Events = {
+  blockNumber: BlockNumber
+  timestamp: string
+  hash: BytecodeSignatureHash
+  nonce: string
+  blockHash: BlockHash
+  transactionIndex: string
+  gas: string
+  gasPrice: string
+  gasUsed: string
+  cumulativeGasUsed: string
+  input: ByteCode
+  contractaddress: Address
+  from: Address
+  to: Address
+  tokenID: string
+  tokenValue: string
+  tokenName: string
+  tokenSymbol: string
+}
+
 export type IERC721TokenID = string
 
 export type BytecodeSignature = {
@@ -374,6 +426,27 @@ export type IERC1155Asset = {
   meta?: string
   needUpdate?: boolean
   lastUpdateBlockNumber?: number
+}
+
+export type IERC1155Events = {
+  blockNumber: BlockNumber
+  timestamp: string
+  hash: BytecodeSignatureHash
+  nonce: string
+  blockHash: BlockHash
+  transactionIndex: string
+  gas: string
+  gasPrice: string
+  gasUsed: string
+  cumulativeGasUsed: string
+  input: ByteCode
+  contractaddress: Address
+  from: Address
+  to: Address
+  tokenID: string
+  tokenValue: string
+  tokenName: string
+  tokenSymbol: string
 }
 
 export enum ContractEventType {

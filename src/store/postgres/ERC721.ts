@@ -1,5 +1,13 @@
 import {IStorageERC721} from 'src/store/interface'
-import {Address, BlockNumber, IERC721Asset, Filter, IERC721, IERC721TokenID} from 'src/types'
+import {
+  Address,
+  BlockNumber,
+  IERC721Asset,
+  Filter,
+  IERC721,
+  IERC721TokenID,
+  IERC721Events,
+} from 'src/types'
 import {Query} from 'src/store/postgres/types'
 import {fromSnakeToCamelResponse, generateQuery} from 'src/store/postgres/queryMapper'
 import {buildSQLQuery} from 'src/store/postgres/filters'
@@ -117,5 +125,13 @@ export class PostgresStorageERC721 implements IStorageERC721 {
     )
 
     return res[0].count
+  }
+
+  getEvents = async (filter: Filter): Promise<IERC721Events> => {
+    const q = buildSQLQuery(filter)
+
+    const res = await this.query(`select * from contract_events ${q}`, [])
+
+    return res.map(fromSnakeToCamelResponse)
   }
 }

@@ -7,7 +7,7 @@ import {ContractTracker} from 'src/indexer/indexer/contracts/types'
 import {PostgresStorage} from 'src/store/postgres'
 import {EntityIteratorEntities} from 'src/indexer/utils/EntityIterator/entities'
 
-const syncingIntervalMs = 1000 * 60 * 5
+const syncingIntervalMs = 1000 * 60 * 2
 
 export class ContractIndexer {
   readonly l: LoggerModule
@@ -104,7 +104,7 @@ export class ContractIndexer {
           continue
         }
 
-        l.info(`Processing ${logs.length} logs`)
+        l.info(`Contract Processing ${logs.length} logs`)
         try {
           await process(this.store, logs, {token})
 

@@ -248,7 +248,7 @@ export class BlockIndexer {
             return Promise.resolve([] as Block[])
           }
 
-          this.l.debug(`Processing [${from}, ${to}] ${to - from + 1} blocks...`)
+          // this.l.debug(`Processing [${from}, ${to}] ${to - from + 1} blocks...`)
 
           const blocks = await getBlocks(from, to)
           const blocksInternalTxs = await getBlocksTrace(blocks)

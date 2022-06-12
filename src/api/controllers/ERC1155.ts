@@ -3,6 +3,7 @@ import {InternalTransaction, ShardID, IERC1155, IERC20Balance, Address} from 'sr
 import {withCache} from 'src/api/controllers/cache'
 import {validator} from 'src/utils/validators/validators'
 import {isAddress, isShard} from 'src/utils/validators'
+import {Filter} from 'src/types'
 
 export async function getAllERC1155(): Promise<IERC1155[] | null> {
   return await withCache(
@@ -59,6 +60,14 @@ export async function getTokenERC1155AssetDetails(
   return await withCache(
     ['getTokenERC1155Assets', arguments],
     () => stores[0].erc1155.getTokenAssetDetails(address, tokenID),
+    1000 * 60 * 5
+  )
+}
+
+export async function getERC1155Events(filter: Filter) {
+  return await withCache(
+    ['getERC1155Events', arguments],
+    () => stores[0].erc1155.getEvents(filter),
     1000 * 60 * 5
   )
 }

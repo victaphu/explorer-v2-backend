@@ -24,6 +24,7 @@ import {rpcRouter} from 'src/api/rest/routes/rpcRouter'
 
 import {transport} from 'src/api/rest/transport'
 import prometheusRegister from 'src/api/prometheus'
+import {explorerRouter} from './routes/explorer'
 const l = logger(module)
 
 export const RESTServer = async () => {
@@ -55,6 +56,9 @@ export const RESTServer = async () => {
   routerWithShards0.use('/erc721', erc721Router, transport)
   routerWithShards0.use('/erc1155', erc1155Router, transport)
   routerWithShards0.use('/1wallet', oneWalletMetricsRouter, transport)
+
+  // link up the API as well
+  routerWithShards0.use('/api', explorerRouter, transport)
 
   if (config.api.json_rpc.isEnabled) {
     routerWithShards0.use('/rpc', rpcRouter, transport)

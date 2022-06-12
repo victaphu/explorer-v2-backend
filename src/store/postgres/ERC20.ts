@@ -1,5 +1,13 @@
 import {IStorageERC20} from 'src/store/interface'
-import {Address, BlockNumber, Contract, Filter, IERC20, IERC20Balance} from 'src/types'
+import {
+  Address,
+  BlockNumber,
+  Contract,
+  Filter,
+  IERC20,
+  IERC20Balance,
+  IERC20Events,
+} from 'src/types'
 import {Query} from 'src/store/postgres/types'
 import {fromSnakeToCamelResponse, generateQuery} from 'src/store/postgres/queryMapper'
 import {buildSQLQuery} from 'src/store/postgres/filters'
@@ -127,6 +135,14 @@ export class PostgresStorageERC20 implements IStorageERC20 {
       `select * from erc20_balance where token_address=$3 and balance > 0 order by balance desc limit $1 offset $2`,
       [limit, offset, token]
     )
+
+    return res.map(fromSnakeToCamelResponse)
+  }
+
+  getEvents = async (filter: Filter): Promise<IERC20Events> => {
+    const q = buildSQLQuery(filter)
+
+    const res = await this.query(`select * from contract_events ${q}`, [])
 
     return res.map(fromSnakeToCamelResponse)
   }

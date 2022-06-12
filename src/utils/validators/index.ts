@@ -15,10 +15,15 @@ export const isShard: CurryParamValidator = (value: number) => () => [
 ]
 export const isBlockNumber: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 
+export const isTransactionIndex: CurryParamValidator = (value: number) => () =>
+  isUint(value, {min: 0})
+
 export const is64CharHexHash: CurryParamValidator = (value: string) => () => [
   isHexString(value),
   isLength(value, {min: 66, max: 66}),
 ]
+
+export const isHexValue: CurryParamValidator = (value: string) => () => [isHexString(value)]
 
 export const is64CharHexSignature: CurryParamValidator = (value: string) => () => [
   isHexString(value),
@@ -35,6 +40,7 @@ export const isAddress: CurryParamValidator = (value: string) => () => [
   isLength(value, {min: 42, max: 42}),
 ]
 
+export const isPage: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 export const isOffset: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 export const isLimit: CurryParamValidator = (value: number, max = 100) => () =>
   isUint(value, {min: 0, max})
@@ -58,7 +64,7 @@ export const isFilters: CurryParamValidator = (
   return value
     .map((f) => [
       isOneOfValidator(f.property, allowedFields),
-      isOneOfValidator(f.type, ['gt', 'gte', 'lt', 'lte']),
+      isOneOfValidator(f.type, ['gt', 'gte', 'lt', 'lte', 'eq', 'nn']),
     ])
     .flatMap((f) => f)
 }

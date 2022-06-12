@@ -8,6 +8,7 @@ import {
   IERC721,
   IERC1155,
   IERC721TokenID,
+  IERC1155Events,
 } from 'src/types'
 import {Query} from 'src/store/postgres/types'
 import {fromSnakeToCamelResponse, generateQuery} from 'src/store/postgres/queryMapper'
@@ -184,6 +185,14 @@ export class PostgresStorageERC1155 implements IStorageERC1155 {
       `select * from erc1155_asset where token_address=$1 and token_id=$2`,
       [address, tokenID]
     )
+
+    return res.map(fromSnakeToCamelResponse)
+  }
+
+  getEvents = async (filter: Filter): Promise<IERC1155Events> => {
+    const q = buildSQLQuery(filter)
+
+    const res = await this.query(`select * from contract_events ${q}`, [])
 
     return res.map(fromSnakeToCamelResponse)
   }
