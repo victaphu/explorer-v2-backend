@@ -40,6 +40,7 @@ export const isAddress: CurryParamValidator = (value: string) => () => [
   isLength(value, {min: 42, max: 42}),
 ]
 
+export const isTimestamp: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 export const isPage: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 export const isOffset: CurryParamValidator = (value: number) => () => isUint(value, {min: 0})
 export const isLimit: CurryParamValidator = (value: number, max = 100) => () =>

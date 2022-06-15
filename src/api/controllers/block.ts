@@ -61,6 +61,14 @@ export async function getMinedBlocks(shardID: ShardID, filter: Filter) {
   )
 }
 
+export async function getBlocksByTimeRange(shardID: ShardID, startTime: number, endTime: number) {
+  return await withCache(
+    ['getBlocksByTimeRange', arguments],
+    () => stores[shardID].block.getBlocksByTimeRange(startTime, endTime),
+    2000
+  )
+}
+
 export async function getBlocks(shardID: ShardID, filter?: Filter) {
   validator({
     shardID: isShard(shardID),

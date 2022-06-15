@@ -35,7 +35,9 @@ export async function ethprice(req: Request, res: Response, next: NextFunction) 
   })
 }
 
-export async function chainsize(req: Request, res: Response, next: NextFunction) {}
+export async function chainsize(req: Request, res: Response, next: NextFunction) {
+  throw new Error('not implemented')
+}
 
 export async function nodecount(req: Request, res: Response, next: NextFunction) {
   const result = await RPCClient.getNodeCount(0)

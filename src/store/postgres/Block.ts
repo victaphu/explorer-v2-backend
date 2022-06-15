@@ -53,6 +53,14 @@ export class PostgresStorageBlock implements IStorageBlock {
     return res.map(fromSnakeToCamelResponse)
   }
 
+  getBlocksByTimeRange = async (startTime: number, endTime: number) => {
+    const res = await this.query(
+      `select * from blocks where timestamp between to_timestamp($1) and to_timestamp($2)`,
+      [startTime, endTime]
+    )
+    return res.map(fromSnakeToCamelResponse)
+  }
+
   getLatestBlockNumber = async (): Promise<number> => {
     const res = await this.query(`select * from indexer_state where indexer_name = 'blocks'`, [])
     return +res[0].last_synced_block_number

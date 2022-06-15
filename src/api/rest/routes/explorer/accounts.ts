@@ -38,7 +38,7 @@ const fetchBalances = async (addresses: string, tag: string | number) => {
   const addressList = addresses.split(',')
   const balanceResult: any[] = []
   if (tag) {
-    if (isNaN(+tag)) {
+    if (!isNaN(+tag)) {
       validator({
         tag: isBlockNumber(tag),
       })
@@ -71,7 +71,7 @@ export async function balance(req: Request, res: Response, next: NextFunction) {
   })
 }
 
-export async function balanceMulti(req: Request, res: Response, next: NextFunction) {
+export async function balancemulti(req: Request, res: Response, next: NextFunction) {
   const {address, tag} = req.query
 
   next({
@@ -283,7 +283,6 @@ export async function tokenbalance(req: Request, res: Response, next: NextFuncti
   const {address, contractaddress} = req.query
 
   const result = await getERC20Balance(contractaddress as string, address as string)
-  console.log(result)
   next({
     result: result?.balance || '0',
     status: '1',
@@ -293,7 +292,7 @@ export async function tokenbalance(req: Request, res: Response, next: NextFuncti
 
 const supportedActions = {
   balance,
-  balanceMulti,
+  balancemulti,
   txlist,
   txlistinternal,
   tokentx,

@@ -88,6 +88,17 @@
       "pre-commit": "yarn format && lint-staged"
     }
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.spec.(ts|js)",
+      "**/tests/**/*.e2e.(ts|js)"
+    ],
+    "testEnvironment": "node"
+  },
   "lint-staged": {
     "src/**/*.{js,ts}": [
       "eslint",
