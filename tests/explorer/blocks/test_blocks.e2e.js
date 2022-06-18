@@ -4,25 +4,49 @@ const {tester} = require('../../utils')
 
 /**
  * Harmony Block Explorer API
- * - Accounts
- *   balance -
- *   balanceMulti
- *   txlist
- *   txlistinternal
- *   tokentx
- *   tokennfttx
- *   getminedblocks
+ * - Blocks
+ *   getblockreward
+ *   getblockcountdown
+ *   getblocknobytime
  */
 
 const supportedActions = {
-  balance: [
+  getblockreward: [
     {
-      test: 'test-balance-api',
+      test: 'test-getblockreward-api',
       input: {
-        module: 'account',
-        action: 'balance',
-        address: '0x0c004686ad7cd05a7611e432b6955bb540653406',
-        tag: 'latest',
+        module: 'block',
+        action: 'getblockreward',
+        blockno: '2165403',
+      },
+      output: {
+        topLevel: ['status', 'message', 'result'],
+        nextLevel: ['blockNumber','timeStamp','blockMiner','blockReward','uncles','miner','unclePosition','blockreward'],
+      }, // test expected output
+    },
+  ],
+  getblockcountdown: [
+    {
+      test: 'test-getblockcountdown-api',
+      input: {
+        module: 'block',
+        action: 'getblockcountdown',
+        blockno: '16701588',
+      },
+      output: {
+        topLevel: ['status', 'message', 'result'],
+        nextLevel: ['CurrentBlock','CountdownBlock','RemainingBlock','EstimateTimeInSec'],
+      }, // test expected output
+    },
+  ],
+  getblocknobytime: [
+    {
+      test: 'test-getblocknobytime-api',
+      input: {
+        module: 'block',
+        action: 'getblocknobytime',
+        timestamp: '1578638524',
+        closest: 'before',
       },
       output: {
         topLevel: ['status', 'message', 'result'],

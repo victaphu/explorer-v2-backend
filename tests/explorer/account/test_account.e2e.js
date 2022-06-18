@@ -297,46 +297,29 @@ const supportedActions = {
       }, // test expected output
     },
   ],
-  token1155tx: [
+  getminedblocks: [
     {
-      test: 'test-token1155tx-api',
+      test: 'test-getminedblocks-api',
       input: {
         module: 'account',
-        action: 'token1155tx',
-        contractaddress: '0x76be3b62873462d2142405439777e971754e8e77',
-        address: '0x83f564d180b58ad9a02a449105568189ee7de8cb',
+        action: 'getminedblocks',
+        address: '0x9dd134d14d1e65f84b706d6f205cd5b1cd03a46b',
+        blocktype: 'blocks',
         page: '1',
-        offset: '100',
-        startblock: '0',
-        endblock: '99999999',
-        sort: 'asc',
+        offset: '10',
       },
       output: {
         topLevel: ['status', 'message', 'result'],
         nextLevel: [
-          'blocknumber',
+          'blockNumber',
           'timeStamp',
-          'hash',
-          'nonce',
-          'blockHash',
-          'transactionIndex',
-          'gas',
-          'gasPrice',
-          'gasUsed',
-          'cumulativeGasUsed',
-          'input',
-          'contractAddress',
-          'from',
-          'to',
-          'tokenID',
-          'tokenValue',
-          'tokenName',
-          'tokenSymbol',
-          'confirmations',
+          'blockReward',
         ],
       }, // test expected output
     },
   ],
+
+  
 }
 
 tester(supportedActions, 'test account')
