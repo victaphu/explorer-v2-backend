@@ -4,29 +4,24 @@ const {tester} = require('../../utils')
 
 /**
  * Harmony Block Explorer API
- * - Accounts
- *   balance -
- *   balanceMulti
- *   txlist
- *   txlistinternal
- *   tokentx
- *   tokennfttx
- *   getminedblocks
+ * - Sample Log API Queries
  */
 
 const supportedActions = {
-  balance: [
+  getLogs: [
     {
-      test: 'test-balance-api',
+      test: 'test-getLogs-api',
       input: {
-        module: 'account',
-        action: 'balance',
-        address: '0x0c004686ad7cd05a7611e432b6955bb540653406',
-        tag: 'latest',
+        module: 'logs',
+        action: 'getLogs',
+        fromBlock: '379224',
+        toBlock: 'latest',
+        address: '0x33990122638b9132ca29c723bdf037f1a891a70c',
+        topic0: '0xf63780e752c6a54a94fc52715dbc5518a3b4c3c2833d301a204226548a2a8545',
       },
       output: {
         topLevel: ['status', 'message', 'result'],
-        nextLevel: [],
+        nextLevel: ['address','topics','data','blockNumber','timeStamp','gasPrice','gasUsed','logIndex','transactionHash','transactionIndex'],
       }, // test expected output
     },
   ],
