@@ -21,7 +21,7 @@ const supportedActions = {
       },
       output: {
         topLevel: ['status', 'message', 'result'],
-        nextLevel: ['blockNumber','timeStamp','blockMiner','blockReward','uncles','miner','unclePosition','blockreward'],
+        nextLevel: ['blockNumber','timeStamp','blockMiner','blockReward','uncles'],
       }, // test expected output
     },
   ],

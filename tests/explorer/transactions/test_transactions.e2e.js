@@ -4,25 +4,33 @@ const {tester} = require('../../utils')
 
 /**
  * Harmony Block Explorer API
- * - Accounts
- *   balance -
- *   balanceMulti
- *   txlist
- *   txlistinternal
- *   tokentx
- *   tokennfttx
- *   getminedblocks
+ * - Transactions
+ *   Check Contract Execution Status
+ *   Check Transaction Receipt Status
  */
 
 const supportedActions = {
-  balance: [
+  getstatus: [
     {
-      test: 'test-balance-api',
+      test: 'test-getstatus-api',
       input: {
-        module: 'account',
-        action: 'balance',
-        address: '0x0c004686ad7cd05a7611e432b6955bb540653406',
-        tag: 'latest',
+        module: 'transaction',
+        action: 'getstatus',
+        txhash: '0x15f8e5ea1079d9a0bb04a4c58ae5fe7654b5b2b4463375ff7ffb490aa0032f3a',
+      },
+      output: {
+        topLevel: ['status', 'message', 'result'],
+        nextLevel: ['isError','errDescription'],
+      }, // test expected output
+    },
+  ],
+  gettxreceiptstatus: [
+    {
+      test: 'test-gettxreceiptstatus-api',
+      input: {
+        module: 'transaction',
+        action: 'gettxreceiptstatus',
+        txhash: '0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76',
       },
       output: {
         topLevel: ['status', 'message', 'result'],

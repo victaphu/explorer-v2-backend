@@ -107,6 +107,127 @@ const supportedActions = {
       }, // test expected output
     },
   ],
+  eth_getTransactionCount: [
+    {
+      test: 'test-eth_getTransactionCount-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_getTransactionCount',
+        address: '0x4bd5900Cb274ef15b153066D736bf3e83A9ba44e',
+        tag: 'latest',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
+  eth_sendRawTransaction: [
+    {
+      test: 'test-eth_sendRawTransaction-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_sendRawTransaction',
+        hex: '0xf904808000831cfde080',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ], 
+  eth_getTransactionReceipt: [
+    {
+      test: 'test-eth_getTransactionReceipt-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_getTransactionReceipt',
+        txhash: '0xadb8aec59e80db99811ac4a0235efa3e45da32928bcff557998552250fa672eb',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: ['blockHash','blockNumber','contractAddress','cumulativeGasUsed','effectiveGasPrice','from','gasUsed','logs'],
+      }, // test expected output
+    },
+  ],
+  eth_call: [
+    {
+      test: 'test-eth_call-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_call',
+        to: '0xAEEF46DB4855E25702F8237E8f403FddcaF931C0',
+        data: '0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724',
+        tag: 'latest',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
+  eth_getCode: [
+    {
+      test: 'test-eth_getCode-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_getCode',
+        address: '0xf75e354c5edc8efed9b59ee9f67a80845ade7d0c',
+        tag: 'latest',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
+  eth_getStorageAt: [
+    {
+      test: 'test-eth_getStorageAt-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_getStorageAt',
+        address: '0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd',
+        position: '0x0',
+        tag: 'latest',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
+  eth_gasPrice: [
+    {
+      test: 'test-eth_gasPrice-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_gasPrice',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
+  eth_estimateGas: [
+    {
+      test: 'test-eth_estimateGas-api',
+      input: {
+        module: 'proxy',
+        action: 'eth_estimateGas',
+        data: '0x4e71d92d',
+        to: '0xf0160428a8552ac9bb7e050d90eeade4ddd52843',
+        value: '0xff22',
+        gasPrice: '0x51da038cc',
+        gas: '0x5f5e0ff',
+      },
+      output: {
+        topLevel: ['jsonrpc', 'id', 'result'],
+        nextLevel: [],
+      }, // test expected output
+    },
+  ],
 }
 
 tester(supportedActions, 'test blocks')
